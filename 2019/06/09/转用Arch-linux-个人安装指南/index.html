@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content>
+  <meta name="author" content="IsaacZhu">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="转用Arch linux 个人安装指南">
+  <meta property="og:description" content>
+  <meta property="og:site_name" content="天下之内，岂有长生不灭者。">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://huzmctsan.github.io/blog">
+  
+    <link rel="alternate" href="/atom.xml" title="天下之内，岂有长生不灭者。" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>天下之内，岂有长生不灭者。</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/blog/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/blog//img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">转用Arch linux 个人安装指南</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/blog/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/blog/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/huzmctsan">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:huzm.ctsan@gmail.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By IsaacZhu</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2019-06-09</span>
+            <span class="time">03:40:51</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/blog/tags/Arch-linux/">#Arch linux</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看硬盘情况</span></span><br><span class="line">fdisk -l</span><br><span class="line"><span class="comment">#新增分区</span></span><br><span class="line"><span class="comment">#然后会让你选first sector and last sector 就是扇区开始位置和结束位置</span></span><br><span class="line"><span class="comment">#first sector 直接按确认就好，last sector填+100G代表创建100G分区。</span></span><br><span class="line">m</span><br><span class="line"><span class="comment">#---------------</span></span><br><span class="line"><span class="comment">#格式化分区</span></span><br><span class="line">mkfs.ext4 /dev/sda1</span><br><span class="line">mkfs.ext4 /dev/sda3</span><br><span class="line"><span class="comment">#格式化swap分区</span></span><br><span class="line">mkswap /dev/sda2</span><br><span class="line">swapon /dev/sda2</span><br><span class="line"></span><br><span class="line"><span class="comment">#---------------</span></span><br><span class="line"><span class="comment">#挂载root分区</span></span><br><span class="line">mount /dev/sda1 /mnt</span><br><span class="line"><span class="comment">#创建/home 并且挂载home分区</span></span><br><span class="line">mkdir /mnt/home</span><br><span class="line">mount /dev/sda3 /mnt/home</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看网卡名称</span></span><br><span class="line">ip link</span><br><span class="line"><span class="comment">#打开wifi接口 wlp0s20f3是网卡名称</span></span><br><span class="line">ip link <span class="built_in">set</span> wlp0s20f3 up</span><br><span class="line"><span class="comment">#扫描wifi信号</span></span><br><span class="line">iwlist wlp0s20f3 scan | less</span><br><span class="line">wpa_passphrase <span class="string">"&lt;wifi_ssid&gt;"</span> <span class="string">"&lt;password&gt;"</span> &gt;&gt; /etc/wpa_supplicant/homewifi.conf</span><br><span class="line">wpa_supplicant -B -i  wlp0s20f3 -c /etc/wpa_supplicant/homewifi.conf</span><br><span class="line">dhcpcd wlp0s20f3</span><br><span class="line">ping baidu.com</span><br><span class="line"></span><br><span class="line"><span class="comment">#----------------------</span></span><br><span class="line"><span class="comment">#安装arch基础包</span></span><br><span class="line">pacstrap /mnt base</span><br><span class="line"><span class="comment">#如有需要编译或者打包程序 安装base-devel</span></span><br><span class="line">pacstrap /mnt base-devel</span><br><span class="line"><span class="comment">#生成自动挂载分区的fstab文件</span></span><br><span class="line">genfstab -L /mnt &gt;&gt; /mnt/etc/fstab</span><br><span class="line"><span class="comment">#输出生成的文件来检查是否正确</span></span><br><span class="line">cat /mnt/etc/fstab</span><br><span class="line"><span class="comment">#把操纵权交给我们新安装（或已经存在）的Linux系统</span></span><br><span class="line">arch-chroot /mnt</span><br><span class="line"><span class="comment">#设置我们的时区</span></span><br><span class="line">ln -sf /usr/share/zoneinfo/Asia/Hong..... /etc/localtime</span><br><span class="line">hwclock --systohc</span><br><span class="line"><span class="comment">#安装必须软件包</span></span><br><span class="line">pacman -S vim wpa_supplicant</span><br><span class="line"><span class="comment">#设置Locale</span></span><br><span class="line">vim /etc/locale.gen</span><br><span class="line"><span class="comment">#找到zh_CN.UTF-8 UTF-8 zh_HK.UTF-8 UTF-8 zh_TW.UTF-8 UTF-8 en_US.UTF-8 UTF-8这四行，去掉行首的#号，保存并退出。</span></span><br><span class="line">locale-gen</span><br><span class="line">vim /etc/locale.conf</span><br><span class="line"><span class="comment">#第一行加入以下内容：</span></span><br><span class="line">LANG=en_US.UTF-8</span><br><span class="line"><span class="comment">#设置主机名</span></span><br><span class="line">vim /etc/hostname</span><br><span class="line"><span class="comment">#第一行输入你自己设定的一个myhostname</span></span><br><span class="line">vim /etc/hosts</span><br><span class="line"><span class="comment">#在文件末添加如下内容</span></span><br><span class="line">127.0.0.1   localhost</span><br><span class="line">::1 localhost</span><br><span class="line">127.0.1.1   myhostname.localdomain  myhostname</span><br><span class="line"><span class="comment">#设置Root密码</span></span><br><span class="line">passwd</span><br><span class="line"><span class="comment">#intel的装一下</span></span><br><span class="line">pacman -S intel-ucode</span><br><span class="line"><span class="comment">#安装Bootloader</span></span><br><span class="line">pacman -S os-prober</span><br><span class="line">pacman -S grub efibootmgr</span><br><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br><span class="line"><span class="comment">#检查接近末尾的menuentry部分是否有windows或其他系统名入口。for muti operation system</span></span><br><span class="line">vim /boot/grub/grub.cfg</span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<p>直接参考这篇文章吧 写的很好<br><a href="https://www.viseator.com/2017/05/17/arch_install/" target="_blank" rel="noopener">https://www.viseator.com/2017/05/17/arch_install/</a></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        </p><p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/blog/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
