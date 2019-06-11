@@ -8,7 +8,7 @@
   <meta name="description" content>
   <meta name="author" content="IsaacZhu">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="fastify初体验">
+  <meta property="og:title" content="在busybox中设置开机服务和定时任务">
   <meta property="og:description" content>
   <meta property="og:site_name" content="天下之内，岂有长生不灭者。">
   <meta property="og:type" content="article">
@@ -43,7 +43,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">fastify初体验</p>
+          <p class="title">在busybox中设置开机服务和定时任务</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -99,7 +99,7 @@
           
           <!-- Date -->
           <span class="date-time info">On
-            <span class="date">2019-05-13</span>
+            <span class="date">2019-06-12</span>
             <span class="time">03:07:01</span>
           </span>
           
@@ -109,17 +109,16 @@
           <div class="post-tags text-muted">
             Tags: 
 
-<a class="tag" href="/blog/tags/js/">#js</a> <a class="tag" href="/blog/tags/fastify/">#fastify</a>
+<a class="tag" href="/blog/tags/linux/">#linux</a>
 
 
           </div>
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>有个小想法想建个项目，刚好看到fastify说自己有多吊，那这次就用fastify好了，看看它和express的差别在哪，是否好用。<br><a id="more"></a><br>首先当然是安装fastify<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install fastify</span><br></pre></td></tr></table></figure></p>
-<p>创建server.js并复制以下代码<br><figure class="highlight javascript"><figcaption><span>server.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Require the framework and instantiate it</span></span><br><span class="line"><span class="keyword">const</span> fastify = <span class="built_in">require</span>(<span class="string">'fastify'</span>)(&#123; <span class="attr">logger</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Declare a route</span></span><br><span class="line">fastify.get(<span class="string">'/'</span>, <span class="keyword">async</span> (request, reply) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123; <span class="attr">hello</span>: <span class="string">'world'</span> &#125;;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Run the server!</span></span><br><span class="line"><span class="keyword">const</span> start = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">await</span> fastify.listen(<span class="number">3000</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      fastify.log.error(err);</span><br><span class="line">      process.exit(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">start()</span><br></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server</span><br></pre></td></tr></table></figure></p>
-<p>完</p>
+          <p>busybox是个好东西，但我不会用，所以取巧的用了很多linux特性来实现定时任务和开机启动服务，所以这边教程应该在linux平台也是通用的。<br><a id="more"></a></p>
+<h2 id="开机启动服务"><a href="#开机启动服务" class="headerlink" title="开机启动服务"></a>开机启动服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在/etc/init.d/中的脚本是linux开机启动的服务</span></span><br><span class="line"><span class="comment"># 所以只要加一个脚本进去就可以了，</span></span><br><span class="line"><span class="comment"># 是不是很简单</span></span><br></pre></td></tr></table></figure>
+<h2 id="crontabs"><a href="#crontabs" class="headerlink" title="crontabs"></a>crontabs</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先busybox每次开机都会有点文件重置了，比如crontabs的文件夹</span></span><br><span class="line"><span class="comment"># 所以要在开机启动服务中自动生成</span></span><br><span class="line"><span class="comment"># 这是我实际用的一个例子</span></span><br><span class="line">mkdir -p /var/spool/cron/crontabs</span><br><span class="line">crontab -e</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"0 2 * * 1 /apps/update.sh"</span> &gt;&gt; /var/spool/cron/crontabs/root</span><br><span class="line">crond</span><br></pre></td></tr></table></figure>
 
         </div>
       </div>
