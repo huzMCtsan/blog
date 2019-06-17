@@ -8,7 +8,7 @@
   <meta name="description" content>
   <meta name="author" content="IsaacZhu">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="一个系统多个GitHub账号同时使用管理">
+  <meta property="og:title" content="Golang colly+json笔记">
   <meta property="og:description" content>
   <meta property="og:site_name" content="天下之内，岂有长生不灭者。">
   <meta property="og:type" content="article">
@@ -43,7 +43,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">一个系统多个GitHub账号同时使用管理</p>
+          <p class="title">Golang colly+json笔记</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -99,7 +99,7 @@
           
           <!-- Date -->
           <span class="date-time info">On
-            <span class="date">2019-06-17</span>
+            <span class="date">2019-06-18</span>
             <span class="time">02:21:37</span>
           </span>
           
@@ -109,19 +109,15 @@
           <div class="post-tags text-muted">
             Tags: 
 
-<a class="tag" href="/blog/tags/github/">#github</a>
+<a class="tag" href="/blog/tags/golang/">#golang</a> <a class="tag" href="/blog/tags/json/">#json</a> <a class="tag" href="/blog/tags/colly/">#colly</a>
 
 
           </div>
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>同时使用多个github的配置<br><a id="more"></a><br>ssh-keygen -t rsa -b 4096 -C “<a href="mailto:your_personal_email@domain.com" target="_blank" rel="noopener">your_personal_email@domain.com</a>“<br>ssh-keygen -t rsa -b 4096 -C “<a href="mailto:your_work_email@domain.com" target="_blank" rel="noopener">your_work_email@domain.com</a>“<br>先设置几个github的账号ssh key。<br>然后分别加到不同账号github的sshkey里面</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">touch config</span><br><span class="line"><span class="comment">#在sshkey默认的存储位置打上面的命令</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Personal account - default config</span></span><br><span class="line">Host github.com</span><br><span class="line">   HostName github.com</span><br><span class="line">   User git</span><br><span class="line">   IdentityFile ~/.ssh/id_rsa_personal</span><br><span class="line"><span class="comment"># Work account</span></span><br><span class="line">Host work.github.com</span><br><span class="line">   HostName github.com</span><br><span class="line">   User git</span><br><span class="line">   IdentityFile ~/.ssh/id_rsa_work</span><br></pre></td></tr></table></figure>
-<p>把work转成你喜欢的名字<br>要使用的时候</p>
-<h1 id="personal"><a href="#personal" class="headerlink" title="personal"></a>personal</h1><p>git clone <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>…..</p>
-<h1 id="work"><a href="#work" class="headerlink" title="work"></a>work</h1><p>git clone <a href="mailto:git@work.github.com" target="_blank" rel="noopener">git@work.github.com</a>…..</p>
+          <p>学习用golang来进行爬虫，记点心得笔记<br><a id="more"></a><br>对于一个json网页文件，我们可以用OnResponse来取得内容</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> startStruct <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">// 首字母必须大写，在多层json的情况下可以继续用[] struct来指定下一层结构</span></span><br><span class="line">    Inv      []invStruct</span><br><span class="line">    <span class="comment">// 在不指定json键名时要和json键名一样</span></span><br><span class="line">    TotalInv <span class="keyword">string</span></span><br><span class="line">    <span class="comment">// 在指定json的键名时可以随意改名</span></span><br><span class="line">    U        <span class="keyword">string</span> <span class="string">`json:"updateTime"`</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> invStruct <span class="keyword">struct</span> &#123;</span><br><span class="line">    Aool  <span class="keyword">string</span></span><br><span class="line">    Value <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line">c.OnResponse(<span class="function"><span class="keyword">func</span><span class="params">(r *colly.Response)</span></span> &#123;</span><br><span class="line">    <span class="comment">// string(r.Body)可以读取到文字内容，但在使用其他格式时不用特意转码</span></span><br><span class="line">    fmt.Println(<span class="keyword">string</span>(r.Body))</span><br><span class="line">    <span class="keyword">var</span> m startStruct</span><br><span class="line">    <span class="comment">// 解码到 m struct</span></span><br><span class="line">    json.Unmarshal(r.Body, &amp;m)</span><br><span class="line">    fmt.Println(m)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
         </div>
       </div>
