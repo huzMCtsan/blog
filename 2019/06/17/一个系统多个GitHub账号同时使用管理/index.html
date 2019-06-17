@@ -8,7 +8,7 @@
   <meta name="description" content>
   <meta name="author" content="IsaacZhu">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="在busybox中设置开机服务和定时任务">
+  <meta property="og:title" content="一个系统多个GitHub账号同时使用管理">
   <meta property="og:description" content>
   <meta property="og:site_name" content="天下之内，岂有长生不灭者。">
   <meta property="og:type" content="article">
@@ -43,7 +43,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">在busybox中设置开机服务和定时任务</p>
+          <p class="title">一个系统多个GitHub账号同时使用管理</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -99,7 +99,7 @@
           
           <!-- Date -->
           <span class="date-time info">On
-            <span class="date">2019-06-12</span>
+            <span class="date">2019-06-17</span>
             <span class="time">22:42:42</span>
           </span>
           
@@ -109,16 +109,18 @@
           <div class="post-tags text-muted">
             Tags: 
 
-<a class="tag" href="/blog/tags/linux/">#linux</a>
+<a class="tag" href="/blog/tags/github/">#github</a>
 
 
           </div>
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>busybox是个好东西，但我不会用，所以取巧的用了很多linux特性来实现定时任务和开机启动服务，所以这边教程应该在linux平台也是通用的。<br><a id="more"></a></p>
-<h2 id="开机启动服务"><a href="#开机启动服务" class="headerlink" title="开机启动服务"></a>开机启动服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在/etc/init.d/中的脚本是linux开机启动的服务</span></span><br><span class="line"><span class="comment"># 所以只要加一个脚本进去就可以了，</span></span><br><span class="line"><span class="comment"># 是不是很简单</span></span><br></pre></td></tr></table></figure>
-<h2 id="crontabs"><a href="#crontabs" class="headerlink" title="crontabs"></a>crontabs</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先busybox每次开机都会有点文件重置了，比如crontabs的文件夹</span></span><br><span class="line"><span class="comment"># 所以要在开机启动服务中自动生成</span></span><br><span class="line"><span class="comment"># 这是我实际用的一个例子</span></span><br><span class="line">mkdir -p /var/spool/cron/crontabs</span><br><span class="line">crontab -e</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"0 2 * * 1 /apps/update.sh"</span> &gt;&gt; /var/spool/cron/crontabs/root</span><br><span class="line">crond</span><br></pre></td></tr></table></figure>
+          <p>同时使用多个github的配置<br><a id="more"></a><br>ssh-keygen -t rsa -b 4096 -C “<a href="mailto:your_personal_email@domain.com" target="_blank" rel="noopener">your_personal_email@domain.com</a>“<br>ssh-keygen -t rsa -b 4096 -C “<a href="mailto:your_work_email@domain.com" target="_blank" rel="noopener">your_work_email@domain.com</a>“<br>先设置几个github的账号ssh key。<br>然后分别加到不同账号github的sshkey里面<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">touch config</span><br><span class="line"><span class="comment">#在sshkey默认的存储位置打上面的命令</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Personal account - default config</span></span><br><span class="line">Host github.com</span><br><span class="line">   HostName github.com</span><br><span class="line">   User git</span><br><span class="line">   IdentityFile ~/.ssh/id_rsa_personal</span><br><span class="line"><span class="comment"># Work account</span></span><br><span class="line">Host work.github.com</span><br><span class="line">   HostName github.com</span><br><span class="line">   User git</span><br><span class="line">   IdentityFile ~/.ssh/id_rsa_work</span><br></pre></td></tr></table></figure>
+<p>把work转成你喜欢的名字<br>要使用的时候</p>
+<h1 id="personal"><a href="#personal" class="headerlink" title="personal"></a>personal</h1><p>git clone <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>…..</p>
+<h1 id="work"><a href="#work" class="headerlink" title="work"></a>work</h1><p>git clone <a href="mailto:git@work.github.com" target="_blank" rel="noopener">git@work.github.com</a>…..</p>
 
         </div>
       </div>
